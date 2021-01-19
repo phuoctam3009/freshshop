@@ -1,0 +1,59 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link href="css/login.css" rel="stylesheet" type="text/css"/>
+        <style>
+            /* The alert message box */
+            .alert {
+                padding: 20px;
+                background-color: #f44336; /* Red */
+                color: white;
+                margin-bottom: 15px;
+            }
+
+            /* The close button */
+            .closebtn {
+                margin-left: 15px;
+                color: white;
+                font-weight: bold;
+                float: right;
+                font-size: 22px;
+                line-height: 20px;
+                cursor: pointer;
+                transition: 0.3s;
+            }
+
+            /* When moving the mouse over the close button */
+            .closebtn:hover {
+                color: black;
+            }
+        </style>
+        <title>Đăng ký</title>
+    </head>
+    <body>
+        <div class="login-page">
+            <div class="form">
+                <!--                <form class="register-form">
+                                    <input type="text" placeholder="name"/>
+                                    <input type="password" placeholder="password"/>
+                                    <input type="text" placeholder="email address"/>
+                                    <button>create</button>
+                                    <p class="message">Already registered? <a href="#">Sign In</a></p>
+                                </form>-->
+                <form class="login-form" method="post" action="Register">
+                    <p>Đăng ký</p>
+
+                    <c:if test ="${message != null}">
+                        <p>Đăng ký thất bại</p>
+                    </c:if>
+                    <input type="email" name="id" placeholder="username" required="" />
+                    <input type="password" name="password" placeholder="password" pattern=".{8,}"/>
+                    <button name="submit" type="submit" >Đăng ký</button>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
