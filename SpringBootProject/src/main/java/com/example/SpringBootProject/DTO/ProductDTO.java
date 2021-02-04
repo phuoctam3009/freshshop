@@ -12,4 +12,5 @@ public class ProductDTO {
     private String name;
     private long priceNew;
     private long priceOld;
+    private long quantity;
 }

@@ -2,6 +2,7 @@ package com.example.SpringBootProject.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @Data
 @Entity
 @AllArgsConstructor
+@NoArgsConstructor
 public class Product{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,9 +27,8 @@ public class Product{
     @ManyToOne
     @JoinColumn(name="category_id", nullable = false)
     private Category category;
+    @OneToMany(mappedBy = "product")
+    private List<CartItem> cartItems;
 
-    public Product(){
-
-    }
 
 }

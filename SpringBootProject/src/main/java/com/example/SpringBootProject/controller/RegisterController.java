@@ -26,6 +26,7 @@ public class RegisterController {
     @GetMapping("/register")
     public String register(@RequestParam(value = "error", required = false) String error,
                            Model model){
+        System.out.println("Di vao register");
         String errorMessage = null;
         if (error != null){
             errorMessage = "Username or Password is incorrect !!";

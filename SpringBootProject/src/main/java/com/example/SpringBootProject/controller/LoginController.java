@@ -27,6 +27,7 @@ public class LoginController {
         Principal principal = request.getUserPrincipal();
         System.out.println(principal);
         if(principal != null){
+            System.out.println(principal.getName());
             return "redirect:/";
         }
         String errorMessage = null;

@@ -25,6 +25,24 @@
 </head>
 
 <body>
+<div class="modal" id="myModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span id="modalBody"></span>
+            </div>
+            <div class="modal-footer">
+                <button id="close-modal" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Start Main Top -->
 <div class="main-top">
     <div class="container-fluid">
@@ -42,11 +60,9 @@
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div sec:authorize="!isAuthenticated()" class="login-box">
-                    <select id="selected" class="selectpicker show-tick form-control" data-placeholder="Sign In">
-                        <option>Register Here</option>
-                        <option>Sign In</option>
-                    </select>
+                <div sec:authorize="!isAuthenticated()" class="row">
+                    <button type="button" class="btn btn-primary"><a th:href="@{/login}">Log in</a></button>
+                    <button type="button" class="btn btn-secondary"><a th:href="@{/register}">Register</a></button>
                 </div>
                 <div class="text-slid-box">
                     <div sec:authorize="isAuthenticated()">
@@ -108,7 +124,12 @@
                     <li class="side-menu">
                         <a href="#">
                             <i class="fa fa-shopping-bag"></i>
-                            <span class="badge">0</span>
+                            <div th:if="${order}">
+                                <span th:text="${order.total_quantity}" class="badge">0</span>
+                            </div>
+                            <div th:unless="${order}">
+                                <span class="badge">0</span>
+                            </div>
                             <p>My Cart</p>
                         </a>
                     </li>
@@ -117,31 +138,25 @@
             <!-- End Atribute Navigation -->
         </div>
         <!-- Start Side Menu -->
-        <div class="side">
+        <div class="side" th:if="${order}">
             <a href="#" class="close-side"><i class="fa fa-times"></i></a>
-            <li class="cart-box">
-                <ul class="cart-list">
-                    <li>
-                        <a href="#" class="photo"><img th:src="@{/images/img-pro-01.jpg}" class="cart-thumb" alt="" /></a>
-                        <h6><a href="#">Delica omtantur </a></h6>
-                        <p>1x - <span class="price">$80.00</span></p>
-                    </li>
-                    <li>
-                        <a href="#" class="photo"><img th:src="@{/images/img-pro-02.jpg}" class="cart-thumb" alt="" /></a>
-                        <h6><a href="#">Omnes ocurreret</a></h6>
-                        <p>1x - <span class="price">$60.00</span></p>
-                    </li>
-                    <li>
-                        <a href="#" class="photo"><img th:src="@{/images/img-pro-03.jpg}" class="cart-thumb" alt="" /></a>
-                        <h6><a href="#">Agam facilisis</a></h6>
-                        <p>1x - <span class="price">$40.00</span></p>
-                    </li>
-                    <li class="total">
-                        <a href="#" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
-                        <span class="float-right"><strong>Total</strong>: $180.00</span>
-                    </li>
-                </ul>
-            </li>
+                <li class="cart-box">
+                    <ul class="cart-list">
+
+                            <th:block th:each="item : ${order.items}">
+                                <li>
+                                    <a href="#" class="photo"><img th:src="${item.product.img}" class="cart-thumb" alt="" /></a>
+                                    <h6><a href="#" th:text="${item.product.name}">Delica omtantur </a></h6>
+                                    <p><span th:text="${item.quantity}"></span>x - $<span class="price" th:text="${item.totalPriceItem}">80.00</span></p>
+                                </li>
+                            </th:block>
+
+                        <li class="total">
+                            <a th:href="@{/cart/view}" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
+                            <span class="float-right"><strong>Total</strong>: $<span th:text="${order.total_order}">180.00</span></span>
+                        </li>
+                    </ul>
+                </li>
         </div>
         <!-- End Side Menu -->
     </nav>
@@ -282,7 +297,10 @@
                                     <li><a href="#" data-toggle="tooltip" data-placement="right" title="Compare"><i class="fas fa-sync-alt"></i></a></li>
                                     <li><a href="#" data-toggle="tooltip" data-placement="right" title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
                                 </ul>
-                                <a class="cart" href="#">Add to Cart</a>
+                                <button>
+                                    <a class="cart" th:id="'productId=' + ${product.id}" href="javascript:void(0)">Add to Cart</a>
+                                </button>
+<!--                                <a class="cart" th:href="@{/cart/add(productId=${product.id})}">Add to Cart</a>-->
                             </div>
                         </div>
                         <div class="why-text">
@@ -530,6 +548,7 @@
 <script th:src="@{/js/form-validator.min.js}"></script>
 <script th:src="@{/js/contact-form-script.js}"></script>
 <script th:src="@{/js/custom.js}"></script>
+<script th:src="@{/js/add_to_cart.js}"></script>
 </body>
 
 </html>

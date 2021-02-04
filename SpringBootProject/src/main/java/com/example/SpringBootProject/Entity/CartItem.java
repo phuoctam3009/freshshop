@@ -5,22 +5,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Data
 @Entity
+@Table(name = "cart_items")
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "Orders")
-public class Order {
+public class CartItem {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    private boolean status;
-    private long total;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @OneToMany(mappedBy = "order")
-    private List<OrderDetail> orderDetails;
+
+    private int quantity;
 }
