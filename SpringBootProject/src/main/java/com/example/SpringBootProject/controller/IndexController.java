@@ -43,6 +43,14 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model, HttpServletRequest request, HttpServletResponse response){
+        Principal user = request.getUserPrincipal();
+        if(user != null){
+            User byUsername = userRepository.findByUsername(user.getName());
+            System.out.println();
+            if(byUsername.getRole().getId() == 1){
+                return "dashboard";
+            }
+        }
         List<Product> listProduct = productRepository.findAll();
         List<Category> listCategory = categoryRepository.findAll();
         model.addAttribute("categories", listCategory);
