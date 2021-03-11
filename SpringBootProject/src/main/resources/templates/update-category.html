@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="header :: html_head"/>
+<body class="skin-light fixed-sn" style="background-color: #fbfbfb;">
+
+<!-- Navigation -->
+<header>
+    <div th:replace="header :: menu">
+
+    </div>
+</header>
+<!-- Navigation -->
+
+<!--Main layout-->
+<main>
+    <div class="container-fluid">
+
+        <!-- Page title -->
+        <h4 class="mt-4 mb-5 text-center">Update Category</h4>
+
+        <!--Section: Block Content-->
+        <section>
+
+            <!--Grid row-->
+            <div class="row">
+                <form th:object="${categoryObj}" method="post">
+                    <input type="hidden" class="url_img" th:value="${categoryObj.img}" onload="loadImage()">
+                    <div class="form-group">
+                        <label>Id</label>
+                        <input type="text" contenteditable="false" class="form-control" th:field="${categoryObj.id}">
+                    </div>
+                    <div class="form-group">
+                        <label>Name Category</label>
+                        <input type="text" class="form-control" placeholder="Name Category"
+                               th:field="${categoryObj.name}">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                   aria-describedby="inputGroupFileAddon01" th:field="${categoryObj.img}">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    <p>
+                        <img id="thumbnail" alt="Image Preview"/>
+                    </p>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                </form>
+
+            </div>
+            <!--Grid row-->
+
+        </section>
+        <!--Section: Block Content-->
+
+    </div>
+</main>
+<!--Main layout-->
+
+<!-- SCRIPTS -->
+<script type="text/javascript">
+    function loadImage(){
+        const preview = document.querySelector('img');
+        let file = document.getElementsByClassName("url_img")[0].value;
+        let reader = new FileReader();
+        alert(file);
+
+        reader.onload = function(e){
+            $('#thumbnail').attr('src', e.target.result);
+        };
+        reader.addEventListener("load", function () {
+            preview.src = reader.result;
+        }, false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+        alert("Success");
+    }
+
+    function showImageThumbnail(fileInput){
+        file = fileInput.files[0];
+        reader = new FileReader();
+
+        reader.onload = function(e){
+            $('#thumbnail').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+    }
+    window.onload = loadImage;
+
+</script>
+<!-- jQuery -->
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
+<!-- MDB Admin -->
+<script type="text/javascript" th:src="@{/js/mdb.admin.min.js}"></script>
+</body>
+</html>

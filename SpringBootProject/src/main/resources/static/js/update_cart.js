@@ -16,6 +16,11 @@ $(document).ready(function(){
         }).done(function (response){
             if(response === 'Success'){
                 location.reload();
+            }else{
+            console.log(response);
+            $(".modal-title").text("Shopping Cart");
+            $("#modalBody").text(response);
+            $("#myModal").modal();
             }
         }).fail(function() {
             $(".modal-title").text("Shopping Cart");

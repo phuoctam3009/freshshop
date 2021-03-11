@@ -54,5 +54,10 @@ public class LoginController {
         return "redirect:/login?logout=true";
     }
 
+    @GetMapping("403")
+    public String deniedPage(){
+        return "403";
+    }
+
 
 }

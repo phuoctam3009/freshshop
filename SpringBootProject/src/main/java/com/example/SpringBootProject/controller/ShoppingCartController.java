@@ -111,8 +111,15 @@ public class ShoppingCartController {
                 return "You can't access this page";
             } else {
                 //Check quantity
-                cartService.updateCart(byUsername, productid, quantity );
-                return "Success";
+                boolean update_status = cartService.updateCart(byUsername, productid, quantity);
+                if (update_status){
+                    return "Success";
+                }else{
+                    System.out.println("aaaaaa");
+                    String message = "Sản phẩm " + productRepository.findById(productid).get().getName() +
+                            " có số lượng tối đa được mua là " + productRepository.findById(productid).get().getQuantity();
+                    return message;
+                }
             }
         }
     }

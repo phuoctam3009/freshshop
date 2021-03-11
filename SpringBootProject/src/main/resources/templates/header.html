@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html_head">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Material Design for Bootstrap</title>
+    <!-- MDB icon -->
+    <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Google Fonts Roboto -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" th:href="@{/css/mdb.min.css}">
+    <!-- Admin styles -->
+    <link rel="stylesheet" th:href="@{/css/mdb.admin.min.css}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" th:href="@{/css/custom.css}">
+    <style>
+    .card {
+      box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.05) !important;
+    }
+
+    .md-pills .nav-link {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+<!-- Sidenav  -->
+    <div th:fragment="menu" id="slide-out" class="side-nav fixed">
+        <ul class="custom-scrollbar">
+            <!-- Logo -->
+            <li>
+                <div class="logo-wrapper waves-light waves-effect waves-light">
+                    <a class="navbar-brand d-flex justify-content-center align-items-center dark-blue-text" href="https://mdbootstrap.com/docs/jquery/admin/" target="_blank">
+                        <img id="MDB-logo"
+                             src="https://z9t4u9f6.stackpathcdn.com/wp-content/uploads/2018/06/logo-mdb-jquery-small.png"
+                             alt="MDB Logo">
+                    </a>
+                </div>
+            </li>
+            <!-- Logo -->
+            <!-- Search Form -->
+            <li>
+                <form class="search-form" role="search">
+                    <div class="form-group md-form mt-0 mb-1 d-block">
+                        <input type="text" class="form-control w-100" placeholder="Search">
+                    </div>
+                </form>
+            </li>
+            <!-- Search Form -->
+            <!-- Side navigation links -->
+            <li>
+                <ul class="collapsible collapsible-accordion">
+                    <!-- Single item -->
+                    <li>
+                        <a th:href="@{/admin/dashboard}" class="collapsible-header navbar-link-2 waves-effect arrow-r d-flex align-items-center"><i
+                                class="fas fa-cubes dark-blue-text"></i> Categories
+                        </a>
+                    </li>
+                    <!-- Single item -->
+                    <!-- Single item -->
+                    <li>
+                        <a href="dashboard-traffic.html" class="collapsible-header navbar-link-2 waves-effect arrow-r d-flex align-items-center"><i
+                                class="fas fa-chart-area dark-blue-text"></i> Order
+                        </a>
+                    </li>
+                    <!-- Single item -->
+                    <!-- Single item -->
+                    <li>
+                        <a th:href="@{/admin/user}" class="collapsible-header navbar-link-2 waves-effect arrow-r d-flex align-items-center"><i
+                                class="fas fa-chart-pie dark-blue-text"></i> User
+                        </a>
+                    </li>
+                    <!-- Single item -->
+                    <!-- Single item -->
+                    <li>
+                        <a th:href="@{/admin/product}" class="collapsible-header navbar-link-2 waves-effect arrow-r d-flex align-items-center"><i
+                                class="fas fa-sign-in-alt dark-blue-text"></i> Product
+                        </a>
+                    </li>
+                    <!-- Single item -->
+                    <!-- Single item -->
+                    <li>
+                        <a href="register.html" class="collapsible-header navbar-link-2 waves-effect arrow-r d-flex align-items-center"><i
+                                class="fas fa-user dark-blue-text"></i> Register
+                        </a>
+                    </li>
+                    <!-- Single item -->
+                    <!-- Single item -->
+                    <li>
+                        <a href="request.html" class="collapsible-header navbar-link-2 waves-effect arrow-r d-flex align-items-center"><i
+                                class="fas fa-lock dark-blue-text"></i> Request password
+                        </a>
+                    </li>
+                    <!-- Single item -->
+                    <!-- Single item -->
+                    <li>
+                        <a href="reset.html" class="collapsible-header navbar-link-2 waves-effect arrow-r d-flex align-items-center"><i
+                                class="fas fa-key dark-blue-text"></i> Reset password
+                        </a>
+                    </li>
+                    <!-- Single item -->
+                </ul>
+            </li>
+            <!-- Side navigation links -->
+        </ul>
+    </div>
+<!-- Sidenav -->
+</body>
+</html>

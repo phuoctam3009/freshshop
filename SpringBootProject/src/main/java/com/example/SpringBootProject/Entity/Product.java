@@ -29,6 +29,18 @@ public class Product{
     private Category category;
     @OneToMany(mappedBy = "product")
     private List<CartItem> cartItems;
+    @Column(name = "extra_image1")
+    private String extraImage1;
+    @Column(name = "extra_image2")
+    private String extraImage2;
+    @Column(name = "extra_image3")
+    private String extraImage3;
 
+    @Transient
+    public String getImagePath(){
+        if (img == null) return null;
+
+        return "/images/product/" + id + "/" + img;
+    }
 
 }

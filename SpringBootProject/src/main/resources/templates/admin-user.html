@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="header :: html_head" />
+<body class="skin-light fixed-sn" style="background-color: #fbfbfb;">
+
+<!-- Navigation -->
+<header>
+    <div th:replace="header :: menu">
+
+    </div>
+</header>
+<!-- Navigation -->
+
+<!--Main layout-->
+<main>
+    <div class="container-fluid">
+        <nav th:if="${message}">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <span th:text="${message}"></span>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="topright">Hi Admin, <span><a th:href="@{/logout}">Logout</a> </span></div>
+        </div>
+        <!-- Page title -->
+        <h4 class="mt-4 mb-5 text-center">User dashboard </h4>
+
+        <!--Section: Block Content-->
+        <section>
+
+            <!--Grid row-->
+            <div class="row">
+
+                <table class="table table-striped table-responsive-md btn-table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Actived</th>
+                        <th scope="col">Reset password</th>
+                        <th scope="col">Update/Delete</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}" scope="row">1</td>
+                        <td th:text="${user.username}">Otto</td>
+                        <td th:text="${user.role.rolename}"></td>
+                        <td>
+                            <th:block th:if="${user.actived}">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" th:id="${user.id}" onclick="return false;" checked>
+                                    <label class="custom-control-label" th:for="${user.id}"></label>
+                                </div>
+                            </th:block>
+                            <th:block th:unless="${user.actived}">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" th:id="${user.id}" onclick="return false;">
+                                    <label class="custom-control-label" th:for="${user.id}"></label>
+                                </div>
+                            </th:block>
+                        </td>
+                        <td>
+                            <a th:href="@{'/admin/user/resetpw/' + ${user.id}}"><button type="button" class="btn btn-indigo btn-sm m-0">Reset</button></a>
+                        </td>
+                        <td>
+                            <a th:href="@{'/admin/user/update/' + ${user.id}}"><button type="button" class="btn btn-indigo btn-sm m-0">Update</button></a>
+                            <th:block th:switch="${user.role.id}">
+                                <a th:case="2" th:href="@{'/admin/user/delete/' + ${user.id}}"><button type="button" class="btn btn-danger btn-sm m-0">Delete</button></a>
+                            </th:block>
+                        </td>
+                    </tr>
+                    </tbody>
+
+                </table>
+
+            </div>
+            <!--Grid row-->
+
+        </section>
+        <!--Section: Block Content-->
+
+    </div>
+</main>
+<!--Main layout-->
+
+<!-- SCRIPTS -->
+<!-- jQuery -->
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
+<!-- MDB Admin -->
+<script type="text/javascript" th:src="@{/js/mdb.admin.min.js}"></script>
+<script th:src="@{/js/admin/categoryfunction.js}"></script>
+
+
+<!--<script src="js/addons/maps/world/world_mill.js"></script>-->
+
+<!-- Initializations -->
+<script>
+    $(document).ready(function () {
+      // SideNav Button Initialization
+      $(".button-collapse").sideNav();
+      // SideNav Scrollbar Initialization
+      var sideNavScrollbar = document.querySelector('.custom-scrollbar');
+      var ps = new PerfectScrollbar(sideNavScrollbar);
+    });
+
+    // Select initialization
+    $(document).ready(function () {
+      $('.mdb-select').materialSelect();
+      $('.select-wrapper.md-form.md-outline input.select-dropdown').bind('focus blur', function () {
+        $(this).closest('.select-outline').find('label').toggleClass('active');
+        $(this).closest('.select-outline').find('.caret').toggleClass('active');
+      });
+    });
+
+    // Date Picker Initialization
+    $('.datepicker').pickadate();
+</script>
+</body>
+
+</html>

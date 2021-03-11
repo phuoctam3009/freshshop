@@ -46,9 +46,8 @@ public class IndexController {
         Principal user = request.getUserPrincipal();
         if(user != null){
             User byUsername = userRepository.findByUsername(user.getName());
-            System.out.println();
             if(byUsername.getRole().getId() == 1){
-                return "dashboard";
+                return "redirect:/admin/dashboard";
             }
         }
         List<Product> listProduct = productRepository.findAll();

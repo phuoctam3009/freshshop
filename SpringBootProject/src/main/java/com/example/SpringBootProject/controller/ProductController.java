@@ -47,4 +47,9 @@ public class ProductController {
 
         return "shop";
     }
+
+    @GetMapping("/test")
+    public String test(Model model){
+        return "shop-detail";
+    }
 }

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head th:replace="header :: html_head" />
+<body class="skin-light fixed-sn" style="background-color: #fbfbfb;">
+
+<!-- Navigation -->
+<header>
+    <div th:replace="header :: menu">
+
+    </div>
+</header>
+<!-- Navigation -->
+
+<!--Main layout-->
+<main>
+    <div class="container-fluid">
+
+        <!-- Page title -->
+        <h4 class="mt-4 mb-5 text-center">Form Add Category</h4>
+
+        <!--Section: Block Content-->
+        <section>
+                <form th:action="@{/admin/product/save}" method="post"
+                      th:object="${product}"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label>Name Product</label>
+                        <input type="text" class="form-control" placeholder="Name Product" th:field="${product.name}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price Old</label>
+                        <input type="text" class="form-control" placeholder="Price Old" th:field="${product.priceOld}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price New</label>
+                        <input type="text" class="form-control" placeholder="Price New" th:field="${product.priceNew}" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="text" class="form-control" placeholder="Quantity" th:field="${product.quantity}">
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select th:field="${product.category.id}" required>
+                            <option th:each="category : ${categories}"
+                                    th:value="${category.id}"
+                                    th:utext="${category.name}"/>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <p>
+                            <label>Main image: </label>
+                            <input type="file" name="mainImage" id="mainImage" accept="image/png, image/jpeg, image/jpg" />
+                        </p>
+                        <img style="width: 150px" alt="Main Image Preview" id="thumbnail" />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <a th:href="@{/admin/product}"><button id="cancel_btn" type="button" class="btn btn-light">Cancel</button></a>
+                </form>
+        </section>
+        <!--Section: Block Content-->
+
+    </div>
+</main>
+<!--Main layout-->
+
+<!-- SCRIPTS -->
+<!-- jQuery -->
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
+<!-- Bootstrap tooltips -->
+<script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+<!-- Bootstrap core JavaScript -->
+<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- MDB core JavaScript -->
+<script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
+<!-- MDB Admin -->
+<script type="text/javascript" th:src="@{/js/mdb.admin.min.js}"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#mainImage').change(function(){
+            showImageThumbnail(this);
+        });
+
+    });
+
+    function showImageThumbnail(fileInput){
+        file = fileInput.files[0];
+        reader = new FileReader();
+
+        reader.onload = function(e){
+            $('#thumbnail').attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+    function showExtraImageThumbnail(fileInput, index){
+        file = fileInput.files[0];
+        reader = new FileReader();
+
+        reader.onload = function(e){
+            $('#thumbnail' + index).attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(file);
+    }
+
+</script>
+</body>
+</html>

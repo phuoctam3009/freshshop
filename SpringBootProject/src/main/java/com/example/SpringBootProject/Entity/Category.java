@@ -16,10 +16,16 @@ public class Category {
     private long id;
     private String name;
     private String img;
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Product> products;
     public Category(){
 
     }
 
+    @Transient
+    public String getImagePath(){
+        if (img == null) return null;
+
+        return "/images/category/" + id + "/" + img;
+    }
 }

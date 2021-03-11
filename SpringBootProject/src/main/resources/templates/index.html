@@ -145,7 +145,7 @@
 
                             <th:block th:each="item : ${order.items}">
                                 <li>
-                                    <a href="#" class="photo"><img th:src="${item.product.img}" class="cart-thumb" alt="" /></a>
+                                    <a href="#" class="photo"><img style="max-width: 500px; max-height: 500px;" th:src="${item.product.img}" class="cart-thumb" alt="" /></a>
                                     <h6><a href="#" th:text="${item.product.name}">Delica omtantur </a></h6>
                                     <p><span th:text="${item.quantity}"></span>x - $<span class="price" th:text="${item.totalPriceItem}">80.00</span></p>
                                 </li>
@@ -231,7 +231,7 @@
                 <th:block th:each="category: ${categories}">
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
                         <div class="shop-cat-box">
-                            <img class="img-fluid" th:src="${category.img}" th:alt="${category.name}" th:title="${category.name}" />
+                            <img class="img-fluid" th:src="@{${category.getImagePath}}" th:alt="${category.name}" th:title="${category.name}" />
                             <a class="btn hvr-hover" href="#"><span th:utext="${category.name}"></span></a>
                         </div>
                     </div>

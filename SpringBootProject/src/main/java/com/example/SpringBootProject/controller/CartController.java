@@ -1,25 +1,15 @@
 package com.example.SpringBootProject.controller;
 
-import com.example.SpringBootProject.DAO.BalanceRepository;
-import com.example.SpringBootProject.DAO.CategoryRepository;
-import com.example.SpringBootProject.DAO.ProductRepository;
-import com.example.SpringBootProject.DAO.UserRepository;
+import com.example.SpringBootProject.DAO.*;
 import com.example.SpringBootProject.DTO.ItemDTO;
 import com.example.SpringBootProject.DTO.OrderDTO;
-import com.example.SpringBootProject.Entity.CartItem;
-import com.example.SpringBootProject.Entity.Order;
-import com.example.SpringBootProject.Entity.Product;
-import com.example.SpringBootProject.Entity.User;
+import com.example.SpringBootProject.Entity.*;
 import com.example.SpringBootProject.Service.ShoppingCartService;
-import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -40,6 +30,48 @@ public class CartController{
     private BalanceRepository balanceRepository;
     @Autowired
     private ShoppingCartService cartService;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private OrderDetailRepository orderDetailRepository;
+    @Autowired
+    private CartItemRepository cartItemRepository;
+
+    @GetMapping("/cart/checkout")
+    public String cartCheckout(Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        Principal user = request.getUserPrincipal();
+        if(user == null){
+            return "redirect:/login";
+        }else{
+            String username = user.getName();
+            User byUsername = userRepository.findByUsername(username);
+            //Check role admin
+            if(byUsername.getRole().getId() == 1){
+                model.addAttribute("loginError", true);
+                return "error";
+            }else{
+                //Xử lý checkout
+                //List sản phẩm cần checkout
+                List<CartItem> cartItems = cartService.listCartItems(byUsername);
+                List<OrderDetail> orderDetailList = new ArrayList<>();
+                Order order = new Order();
+                //Check số lượng và sản phẩm
+                for (CartItem cartItem: cartItems) {
+                    //Check quantity
+                    if(cartItem.getProduct().getQuantity() < cartItem.getQuantity()){
+                        String message = "Sản phẩm " + cartItem.getProduct().getName() + " có số lượng tối đa được mua là " +
+                                cartItem.getProduct().getQuantity();
+                        System.out.println("Sản phẩm " + cartItem.getProduct().getName() + " có số lượng tối đa được mua là " +
+                                cartItem.getProduct().getQuantity());
+                        redirectAttributes.addFlashAttribute("message", message);
+                        return "redirect:/cart/view";
+                    }
+                }
+                cartService.checkoutOrder(order, byUsername);
+            }
+        }
+        return "redirect:/";
+    }
 
     @GetMapping("/cart/view")
     public String showShoppingCart(Model model, HttpServletRequest request){
@@ -76,6 +108,8 @@ public class CartController{
             }
         }
     }
+
+
 
     @GetMapping("/cart/change")
     public String changeQuantity(@RequestParam(name = "productId") String id, @RequestParam(name = "quantity") String quantity, Model model, HttpServletRequest request){

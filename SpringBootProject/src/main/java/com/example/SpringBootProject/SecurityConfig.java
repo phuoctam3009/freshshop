@@ -44,7 +44,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // Các trang không yêu cầu login
         http.authorizeRequests().antMatchers("/", "/login", "/logout").permitAll();
 
-        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/login-error");
+        http.authorizeRequests().antMatchers("/admin/**").hasAuthority("ROLE_ADMIN");
+
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         // Cấu hình cho Login Form.
         http.authorizeRequests().and().formLogin()//
