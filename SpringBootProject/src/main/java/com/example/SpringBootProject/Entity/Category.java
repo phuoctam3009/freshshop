@@ -1,6 +1,5 @@
 package com.example.SpringBootProject.Entity;
 
-import com.sun.istack.internal.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
