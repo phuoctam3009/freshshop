@@ -1,7 +1,5 @@
 package com.example.SpringBootProject.Service;
 
-
-import com.example.SpringBootProject.DAO.UserRepository;
 import com.example.SpringBootProject.Entity.User;
 import com.example.SpringBootProject.Security.MyUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,6 +1,5 @@
 package com.example.SpringBootProject.Security;
 
-import com.example.SpringBootProject.Entity.Role;
 import com.example.SpringBootProject.Entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,7 +19,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Role role_user = user.getRole();
+        com.example.SpringBootProject.Entity.Role role = user.getRole();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(role_user.getRolename()));
         return authorities;
